@@ -12,60 +12,47 @@
  
 // Set the dimensions of the canvas / graph
 var margin = {top: 30, right: 20, bottom: 30, left: 50};
-var width = 600 - margin.left - margin.right;
+var width = 1000 - margin.left - margin.right;
 var height = 270 - margin.top - margin.bottom;
- 
-// Parse the date / time
-var parseDate = d3.time.format("%m-%d-%y").parse;
- 
-// Set the ranges
-var x = d3.time.scale().range([0, width]);
-var y = d3.scale.linear().range([height, 0]);
- 
-// Define the axes
-var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(5);
- 
-var yAxis = d3.svg.axis().scale(y).orient("left").ticks(5);
- 
-// Define the line
-var valueline = d3.svg.line()
-  .x(function(d) { return x(d.date); })
-  .y(function(d) { return y(d.close); });
-    
-// Adds the svg canvas
-var svg = d3.select("body")
+
+var svg = d3.select("#medianHousePrice")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
- 
-// Get the data
-d3.csv("https://github.com/jasonct05/jasonct05.github.io/blob/master/Data/MedianSalePrice.csv", function(error, data) {
-  data.forEach(function(d) {
-    d.date = parseDate(d.date);
-    d.close = +d.close;
-  });
- 
-  // Scale the range of the data
-  x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d.close; })]);
- 
-  // Add the valueline path.
-  svg.append("path")  
-    .attr("class", "line")
-    .attr("d", valueline(data));
- 
-  // Add the X Axis
-  svg.append("g")   
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
- 
-  // Add the Y Axis
-  svg.append("g")   
-    .attr("class", "y axis")
-    .call(yAxis);
- 
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+//TODO: CHANGE ME
+d3.csv("http://localhost:8080/Data/MedianSalePrice.csv",
+  function(d){
+    return { date : d3.timeParse("%m/%d/%Y")(d.Date), price : parseInt(d.Price.replace(",","")) }
+  },
+
+  function(data) {
+    var x = d3.scaleTime()
+      .domain(d3.extent(data, function(d) { console.log(d.date);return d.date; }))
+      .range([ 0, width ]);
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x).ticks(10));
+
+    // Add Y axis
+    var y = d3.scaleLinear()
+      .domain([0, d3.max(data, function(d) { return d.price; })])
+      .range([ height, 0 ]);
+    svg.append("g")
+      .call(d3.axisLeft(y));
+
+    // Add the line
+    svg.append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 3)
+      .attr("d", d3.line()
+        .x(function(d) { return x(d.date) })
+        .y(function(d) { return y(d.price) })
+        )
 });
 </script>
