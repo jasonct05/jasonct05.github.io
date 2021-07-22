@@ -1,7 +1,7 @@
 function daysOnMarket()
 {
-  var margin = {top: 30, right: 20, bottom: 30, left: 50};
-  var width = 1000 - margin.left - margin.right;
+  var margin = {top: 30, right: 30, bottom: 30, left: 60};
+  var width = 500 - margin.left - margin.right;
   var height = 270 - margin.top - margin.bottom;
 
   var svg = d3.select("#daysOnMarket")
@@ -20,11 +20,11 @@ function daysOnMarket()
       // Add X axis
       var x = d3.scaleTime()
         .domain(d3.extent(data, function(d) { return d.date; }))
-        .range([ 0, width ]);
+        .range([0, width]);
       
       var xAxis = svg.append("g")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%B")));
+        .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b")));
 
       // Add Y axis
       var y = d3.scaleLinear()
@@ -222,5 +222,54 @@ function daysOnMarket()
         focusText2020.style("opacity", 0);
         line.style("opacity", 0);
       }
+
+      function makeAnnotation(point, dx, dy, label, title, delay)
+      {
+        var xLoc = x(point.date);
+        var yLoc = y(point["2020"]);
+        const annotation = [
+          {
+            note: {
+              label: label,
+              title: title
+            },
+            x: xLoc,
+            y: yLoc,
+            dy: dx,
+            dx: dy
+          }
+        ];
+
+        // Add annotation to the chart
+        const makeAnnotations = d3.annotation().annotations(annotation);
+
+        svg.append("circle")
+          .attr("stroke", "green")
+          .attr("fill", "green")
+          .attr("r", 5)
+          .attr("cx", xLoc)
+          .attr("cy", yLoc)
+          .style("opacity", 0)
+          .transition().delay(delay).style("opacity",1);
+
+        svg.append("g").style("opacity", 0).call(makeAnnotations).transition().delay(delay).style("opacity",1);
+      }
+
+      makeAnnotation(
+        data[5],
+        -25,
+        25,
+        "Pandemic fear in full effect, average days on market reaches all time high of 32 days",
+        "June 2020",
+        1000);
+
+      makeAnnotation(
+        data[10],
+        25,
+        -25,
+        "Upper class Americans drives housing market to all time low of 23 days",
+        "November 2020",
+        2000);
   });
 }
+
