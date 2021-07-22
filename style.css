@@ -1,0 +1,72 @@
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font: 10px sans-serif;
+}
+
+h1 {
+	font-family: lucida grande, lucida sans, sans-serif;
+	font-size: 30px;
+}
+
+p {
+	font-family: lucida grande, lucida sans, sans-serif;
+	font-size: 13px;
+}
+
+#navigation {
+	width: 15vw;
+	height: 100vh;
+	position: fixed;
+}
+
+#navigation a {
+    color: #545454;
+    font-family: lucida grande, lucida sans, sans-serif;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+#navigation ul {
+    list-style-type: none;
+    vertical-align: middle;
+}
+
+#navigation li {
+	padding-top: 30px;
+}
+
+#navigation a:hover, a:active {
+    color: #191919;
+}
+
+.page {
+	min-height: 100vh;
+	border-color: solid;
+	width: 1000px;
+	padding-top: 100 px;
+}
+
+#header {
+	height: 10vh;
+	width: 85vw;
+}
+
+#content {
+	float:left;
+	margin-left: 15vw;
+}
+
+#daysOnMarket {
+	float: left;
+}
+
+#percentAboveList {
+	float: right;
+}
+
+#description {
+	opacity: 1;
+}
