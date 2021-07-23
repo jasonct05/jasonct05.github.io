@@ -9,7 +9,7 @@ var legendMapping = { "lumber": "Price ($) per 110k feet",
 
 function inventory()
 {
-  var svg = d3.select("#inventory")
+  var svg = d3.select("#Reasons")
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
