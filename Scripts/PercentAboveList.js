@@ -227,8 +227,8 @@ function percentAboveList()
         var annotationHeight = 60;
 
         svg.append("circle")
-          .attr("stroke", "steelblue")
-          .attr("fill", "steelblue")
+          .attr("stroke", "green")
+          .attr("fill", "green")
           .attr("r", 5)
           .attr("cx", xLoc)
           .attr("cy", yLoc)
@@ -284,7 +284,7 @@ function percentAboveList()
         50,
         "Covid scare causes slight dip in market, bringing average home sold price above listing to 26% ",
         "May 2020",
-        1000);
+        5000);
 
       makeAnnotation(
         data[9],
@@ -292,6 +292,6 @@ function percentAboveList()
         100,
         "Market Competition remains tough, raising average home sold price above listing to record 36%",
         "October 2020",
-        2000);
+        6000);
   });
 }

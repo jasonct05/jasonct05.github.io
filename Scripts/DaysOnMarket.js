@@ -223,8 +223,8 @@ function daysOnMarket()
         var annotationHeight = 60;
 
         svg.append("circle")
-          .attr("stroke", "steelblue")
-          .attr("fill", "steelblue")
+          .attr("stroke", "green")
+          .attr("fill", "green")
           .attr("r", 5)
           .attr("cx", xLoc)
           .attr("cy", yLoc)
@@ -280,7 +280,7 @@ function daysOnMarket()
         -25,
         "Pandemic fear in full effect, average days on market reaches all time high of 32 days",
         "June 2020",
-        1000);
+        5000);
 
       makeAnnotation(
         data[10],
@@ -288,7 +288,7 @@ function daysOnMarket()
         25,
         "Upper class Americans drives housing market to all time low of 23 days",
         "November 2020",
-        2000);
+        6000);
   });
 }
 
