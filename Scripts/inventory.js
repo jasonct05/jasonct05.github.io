@@ -3,8 +3,8 @@ var margin = {top: 30, right: 20, bottom: 30, left: 60};
 var width = 1000 - margin.left - margin.right;
 var height = 400 - margin.top - margin.bottom;
 
-var legendMapping = { "lumber": "Price ($) per 110k feet",
-                      "steel": "Price ($) per 20 short tons"
+var legendMapping = { "Lumber": "Price ($) per 110k feet",
+                      "Steel": "Price ($) per 20 short tons"
                     };
 
 function inventory()
@@ -237,7 +237,7 @@ function inventory()
 
 function updateInventory(path)
 {
-  d3.csv("Data/" + path + "price.csv",
+  d3.csv("Data/" + path + "Price.csv",
     function(d){
       return { date : d3.timeParse("%B")(d["Month"]), "2018" : parseInt(d["2018"]), "2019" : parseInt(d["2019"]), "2020" : parseInt(d["2020"]) }
     },
