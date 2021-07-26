@@ -227,46 +227,73 @@ function daysOnMarket()
       {
         var xLoc = x(point.date);
         var yLoc = y(point["2020"]);
-        const annotation = [
-          {
-            note: {
-              label: label,
-              title: title
-            },
-            x: xLoc,
-            y: yLoc,
-            dy: dx,
-            dx: dy
-          }
-        ];
-
-        // Add annotation to the chart
-        const makeAnnotations = d3.annotation().annotations(annotation);
+        var annotationWidth = 100;
+        var annotationHeight = 60;
 
         svg.append("circle")
-          .attr("stroke", "green")
-          .attr("fill", "green")
+          .attr("stroke", "steelblue")
+          .attr("fill", "steelblue")
           .attr("r", 5)
           .attr("cx", xLoc)
           .attr("cy", yLoc)
           .style("opacity", 0)
           .transition().delay(delay).style("opacity",1);
 
-        svg.append("g").style("opacity", 0).call(makeAnnotations).transition().delay(delay).style("opacity",1);
+        svg.append("line")
+          .attr("x1", xLoc)
+          .attr("y1", yLoc)
+          .attr("x2", xLoc + dx)
+          .attr("y2", yLoc + dy)
+          .style("stroke", "grey")
+          .style("stroke-width", 1)
+          .style("opacity", 0)
+          .transition().delay(delay).style("opacity",1);
+
+        svg.append("line")
+          .attr("x1", xLoc + dx)
+          .attr("y1", yLoc + dy)
+          .attr("x2", xLoc + dx + annotationWidth)
+          .attr("y2", yLoc + dy)
+          .style("stroke", "grey")
+          .style("stroke-width", 1)
+          .style("opacity", 0)
+          .transition().delay(delay).style("opacity",1);
+
+        var yLocRect = dy > 0 ? yLoc + dy : yLoc + dy - annotationHeight; 
+        svg.append("text")
+          .attr("x", xLoc + dx)
+          .attr("y", yLocRect + 10)
+          .style("font-weight", "bold")
+          .style("fill", "grey")
+          .text(title)
+          .style("opacity", 0)
+          .transition().delay(delay).style("opacity",1);
+        
+        svg.append("text")
+          .attr("x", xLoc + dx)
+          .attr("y", yLocRect + 25)
+          .attr("textLength", annotationWidth)
+          .style("font-weight", "normal")
+          .style("font-size", 10)
+          .style("fill", "grey")
+          .text(label)
+          .call(wrap, annotationWidth)
+          .style("opacity", 0)
+          .transition().delay(delay).style("opacity",1);
       }
 
       makeAnnotation(
         data[5],
-        -25,
         25,
+        -25,
         "Pandemic fear in full effect, average days on market reaches all time high of 32 days",
         "June 2020",
         1000);
 
       makeAnnotation(
         data[10],
+        -70,
         25,
-        -25,
         "Upper class Americans drives housing market to all time low of 23 days",
         "November 2020",
         2000);

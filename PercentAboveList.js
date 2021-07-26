@@ -227,46 +227,74 @@ function percentAboveList()
       {
         var xLoc = x(point.date);
         var yLoc = y(point["2020"]);
-        const annotation = [
-          {
-            note: {
-              label: label,
-              title: title
-            },
-            x: xLoc,
-            y: yLoc,
-            dy: dx,
-            dx: dy
-          }
-        ];
 
-        // Add annotation to the chart
-        const makeAnnotations = d3.annotation().annotations(annotation);
+        var annotationWidth = 100;
+        var annotationHeight = 60;
 
         svg.append("circle")
-          .attr("stroke", "green")
-          .attr("fill", "green")
+          .attr("stroke", "steelblue")
+          .attr("fill", "steelblue")
           .attr("r", 5)
           .attr("cx", xLoc)
           .attr("cy", yLoc)
           .style("opacity", 0)
           .transition().delay(delay).style("opacity",1);
 
-        svg.append("g").style("opacity", 0).call(makeAnnotations).transition().delay(delay).style("opacity",1);
+        svg.append("line")
+          .attr("x1", xLoc)
+          .attr("y1", yLoc)
+          .attr("x2", xLoc + dx)
+          .attr("y2", yLoc + dy)
+          .style("stroke", "grey")
+          .style("stroke-width", 1)
+          .style("opacity", 0)
+          .transition().delay(delay).style("opacity",1);
+
+        svg.append("line")
+          .attr("x1", xLoc + dx)
+          .attr("y1", yLoc + dy)
+          .attr("x2", xLoc + dx + annotationWidth)
+          .attr("y2", yLoc + dy)
+          .style("stroke", "grey")
+          .style("stroke-width", 1)
+          .style("opacity", 0)
+          .transition().delay(delay).style("opacity",1);
+
+        var yLocRect = dy > 0 ? yLoc + dy : yLoc + dy - annotationHeight; 
+        svg.append("text")
+          .attr("x", xLoc + dx)
+          .attr("y", yLocRect + 10)
+          .style("font-weight", "bold")
+          .style("fill", "grey")
+          .text(title)
+          .style("opacity", 0)
+          .transition().delay(delay).style("opacity",1);
+        
+        svg.append("text")
+          .attr("x", xLoc + dx)
+          .attr("y", yLocRect + 25)
+          .attr("textLength", annotationWidth)
+          .style("font-weight", "normal")
+          .style("font-size", 10)
+          .style("fill", "grey")
+          .text(label)
+          .call(wrap, annotationWidth)
+          .style("opacity", 0)
+          .transition().delay(delay).style("opacity",1);
       }
 
       makeAnnotation(
         data[4],
-        50,
         -25,
+        50,
         "Covid scare causes slight dip in market, bringing average home sold price above listing to 26% ",
         "May 2020",
         1000);
 
       makeAnnotation(
         data[9],
-        100,
         -25,
+        100,
         "Market Competition remains tough, raising average home sold price above listing to record 36%",
         "October 2020",
         2000);
