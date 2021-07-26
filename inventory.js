@@ -16,13 +16,12 @@ function inventory()
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.csv("http://localhost:8080/Data/LumberPrice.csv",
+  d3.csv("Data/LumberPrice.csv",
     function(d){
       return { date : d3.timeParse("%B")(d["Month"]), "2018" : parseInt(d["2018"]), "2019" : parseInt(d["2019"]), "2020" : parseInt(d["2020"]) }
     },
 
     function(data) {
-      // Add X axis
       var x = d3.scaleTime()
         .domain(d3.extent(data, function(d) { return d.date; }))
         .range([ 0, width]);
@@ -31,7 +30,6 @@ function inventory()
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%B")));
 
-      // Add Y axis
       var y = d3.scaleLinear()
         .domain([0, d3.max(data, function(d) {
           var maxValue = Math.max(d["2018"], d["2019"], d["2020"]);
@@ -53,7 +51,6 @@ function inventory()
         .text(legendMapping["lumber"])
         .raise();
 
-      // Add Path
       svg.append("path")
         .datum(data)
         .attr("id", "Path2018")
@@ -87,7 +84,6 @@ function inventory()
           .y(function(d) { return y(d["2020"]) })
         );
 
-      // Legend
       svg.append("circle").attr("cx",width - 50).attr("cy", 0).attr("r", 3).style("fill", "steelBlue");
       svg.append("circle").attr("cx",width - 50).attr("cy",10).attr("r", 3).style("fill", "orange");
       svg.append("circle").attr("cx",width - 50).attr("cy",20).attr("r", 3).style("fill", "green");
@@ -95,71 +91,67 @@ function inventory()
       svg.append("text").attr("x", width - 40).attr("y", 10).text("2019").style("font-size", "10px").attr("alignment-baseline","middle");
       svg.append("text").attr("x", width - 40).attr("y", 20).text("2020").style("font-size", "10px").attr("alignment-baseline","middle");
 
-      // Circles
       var focus2018 = svg
-        .append('g')
-        .append('circle')
+        .append("g")
+        .append("circle")
         .style("fill", "none")
         .attr("stroke", "steelblue")
-        .attr('r', 5)
+        .attr("r", 5)
         .attr("id", "focus2018")
         .style("opacity", 0);
 
       var focus2019 = svg
-        .append('g')
-        .append('circle')
+        .append("g")
+        .append("circle")
         .style("fill", "none")
         .attr("stroke", "orange")
-        .attr('r', 5)
+        .attr("r", 5)
         .attr("id", "focus2019")
         .style("opacity", 0);
 
       var focus2020 = svg
-        .append('g')
-        .append('circle')
+        .append("g")
+        .append("circle")
         .style("fill", "none")
         .attr("stroke", "green")
         .attr("id", "focus2020")
-        .attr('r', 5)
+        .attr("r", 5)
         .style("opacity", 0);
 
-      // Text
       var focusText2018 = svg
-        .append('g')
-        .append('text')
+        .append("g")
+        .append("text")
         .style("opacity", 0)
         .attr("id", "focusText2018")
         .attr("text-anchor", "left")
       .attr("alignment-baseline", "middle")
 
-      // Text
       var focusText2019 = svg
-        .append('g')
-        .append('text')
+        .append("g")
+        .append("text")
         .style("opacity", 0)
         .attr("id", "focusText2019")
         .attr("text-anchor", "left")
       .attr("alignment-baseline", "middle")
 
-      // Text
       var focusText2020 = svg
-        .append('g')
-        .append('text')
+        .append("g")
+        .append("text")
         .style("opacity", 0)
         .attr("id", "focusText2020")
         .attr("text-anchor", "left")
       .attr("alignment-baseline", "middle")
 
       var canvas = svg
-        .append('rect')
+        .append("rect")
         .style("fill", "none")
         .style("pointer-events", "all")
         .attr("id", "canvas")
-        .attr('width', width)
-        .attr('height', height)
-        .on('mouseover', mouseover)
-        .on('mousemove', mousemove)
-        .on('mouseout', mouseout);
+        .attr("width", width)
+        .attr("height", height)
+        .on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseout", mouseout);
 
       var line = svg.append("path")
         .style("stroke", "black")
