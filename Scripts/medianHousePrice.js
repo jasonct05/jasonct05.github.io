@@ -11,7 +11,7 @@ function medianHousePrice()
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.csv("http://localhost:8080/Data/MedianSalePrice.csv",
+  d3.csv("Data/MedianSalePrice.csv",
     function(d){
       return { date : d3.timeParse("%m/%d/%Y")(d.Date), price : parseInt(d.Price.replace(",","")) }
     },
