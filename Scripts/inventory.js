@@ -237,7 +237,7 @@ function inventory()
 
 function updateInventory(path)
 {
-  d3.csv("Data/" + path + "Price.csv",
+  d3.csv("./Data/" + path + "Price.csv",
     function(d){
       return { date : d3.timeParse("%B")(d["Month"]), "2018" : parseInt(d["2018"]), "2019" : parseInt(d["2019"]), "2020" : parseInt(d["2020"]) }
     },
