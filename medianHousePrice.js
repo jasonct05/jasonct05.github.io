@@ -234,7 +234,7 @@ function wrap(text, width) {
       word,
       line = [],
       lineNumber = 0,
-      lineHeight = 1.2,
+      lineHeight = 1.1,
       x = text.attr("x"),
       y = text.attr("y"),
       dy = 0,
